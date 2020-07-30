@@ -18,7 +18,7 @@ class character(object):
 
             self.x = 50
             self.y = 50
-            self.hitbox = (self.x,self.y,55,55)
+            self.hitbox = (self.x - 25,self.y - 25,55,55)
 
 
         def draw(self, surface):
@@ -28,21 +28,41 @@ class character(object):
                 
         def movement(self, width, hight):
             key = pygame.key.get_pressed()
-            if key[pygame.K_LEFT] and self.x >0:
+            if key[pygame.K_LEFT] and character.isHit(width,hight).l == False:
                 self.x -= 1
-            if key[pygame.K_RIGHT] and self.x < width - 50:
+            if key[pygame.K_RIGHT] and character.isHit(width,hight).r == False:
                 self.x += 1
-            if key[pygame.K_UP] and self.y > 0:
+            if key[pygame.K_UP] and character.isHit(width,hight).u == False:
                 self.y -= 1
-            if key[pygame.K_DOWN] and self.y < -50:
+            if key[pygame.K_DOWN] and character.isHit(width,hight).d == False:
                 self.y += 1
         def gravity(self):
             if self.y > 0 and pygame.key.get_focused() == False:
                self.y += 1
-pygame.init()
-screen_width = 600
-screen_hieght = 600
-screen = pygame.display.set_mode((screen_width,screen_hieght))
+        def isHit(width,hight):
+            r,l,u,d = False
+            if self.y > 0:
+                self.u = True
+                else:
+                self.u = False
+            if self.x > 0:
+                self.l = True
+                else:
+                    self.l = False
+            if self.y < hight - 50:
+                self.d = True
+                else:
+                    self.d = False
+            if self.x < width - 50:
+                self.r = True
+                else:
+                    self.r =False
+
+
+    pygame.init()
+    screen_width = 600
+    screen_hieght = 600
+    screen = pygame.display.set_mode((screen_width,screen_hieght))
 
 Sprite = character()
 clock = pygame.time.Clock()
